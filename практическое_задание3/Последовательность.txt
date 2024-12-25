@@ -1,0 +1,42 @@
+@startuml
+
+participant Пользователь as user
+participant Приложение as application
+participant Сервер as server
+participant БазаДанных as database
+
+user -> application: Активация приложения
+application --> user: Запрашивает логин и пароль
+user -> application: Вводит логин и пароль
+application -> server: Проверка логина и пароля
+
+alt Неправильный логин/пароль
+    server --> application: Неправильно
+    application --> user: Сообщает об ошибке авторизации
+    application --> user: Запрашивает логин и пароль снова
+    user -> application: Вводит логин и пароль
+    application -> server: Проверка логина и пароля
+end
+
+alt Правильный логин/пароль
+    server --> application: Правильно
+    application --> user: Сообщает, что авторизация успешна
+    application --> user: Показывает текущую температуру
+
+    user -> application: Нажимает кнопку "История наблюдений"
+    application -> server: Запрос о глубине истории
+    server -> database: Запрос глубины истории
+    database --> server: Возвращает глубину истории
+    server --> application: Передает глубину истории
+
+    application --> user: Предлагает выбрать период наблюдения
+    user -> application: Вводит период наблюдения
+    application -> server: Запрос данных за указанный период
+    server -> database: Запрос данных за указанный период
+    database --> server: Передает данные по запросу
+    server --> application: Передает данные пользователю
+    application -> application: Обрабатывает данные в графическом редакторе
+    application --> user: Показывает график
+end
+
+@enduml
