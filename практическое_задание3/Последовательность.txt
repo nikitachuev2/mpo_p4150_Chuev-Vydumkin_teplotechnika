@@ -11,7 +11,7 @@ user -> application: Вводит логин и пароль
 application -> server: Проверка логина и пароля
 
 alt Неправильный логин/пароль
-    server --> application: Неправильно
+    server --> application: Неправильный логин или пароль
     application --> user: Сообщает об ошибке авторизации
     application --> user: Запрашивает логин и пароль снова
     user -> application: Вводит логин и пароль
@@ -19,7 +19,7 @@ alt Неправильный логин/пароль
 end
 
 alt Правильный логин/пароль
-    server --> application: Правильно
+    server --> application: Успешно
     application --> user: Сообщает, что авторизация успешна
     application --> user: Показывает текущую температуру
 
